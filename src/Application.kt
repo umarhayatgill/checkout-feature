@@ -1,5 +1,6 @@
 package com.checkout
 
+import com.checkout.CheckoutService.checkoutWatches
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -21,12 +22,13 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
-
-        get("/json/jackson") {
-            call.respond(mapOf("hello" to "world"))
+        post("/checkout") {
+            try {
+                val request = call.receive<ArrayList<String>>()
+                call.respond(mapOf("price" to checkoutWatches(request)))
+            } catch (exception: Exception) {
+                log.error("Exception occurred", exception)
+            }
         }
     }
 }

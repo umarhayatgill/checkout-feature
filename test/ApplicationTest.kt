@@ -1,23 +1,25 @@
 package com.checkout
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
 import io.ktor.http.*
-import com.fasterxml.jackson.databind.*
-import io.ktor.jackson.*
-import io.ktor.features.*
-import kotlin.test.*
 import io.ktor.server.testing.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ApplicationTest {
     @Test
     fun testRoot() {
         withTestApplication({ module(testing = true) }) {
-            handleRequest(HttpMethod.Get, "/").apply {
+            with(handleRequest(HttpMethod.Post, "/checkout") {
+                addHeader("content-type", "application/json")
+                addHeader("Accept", "application/json")
+                setBody(
+                    """["001","002","001","004","003"]"""
+                )
+            }) {
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("HELLO WORLD!", response.content)
+                JSONAssert.assertEquals("""{"price": 100 }""", response.content, JSONCompareMode.LENIENT)
             }
         }
     }
