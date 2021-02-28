@@ -8,8 +8,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ApplicationTest {
+
     @Test
-    fun testRoot() {
+    fun should_not_apply_any_discount() {
         withTestApplication({ module(testing = true) }) {
             with(handleRequest(HttpMethod.Post, "/checkout") {
                 addHeader("content-type", "application/json")
@@ -19,7 +20,55 @@ class ApplicationTest {
                 )
             }) {
                 assertEquals(HttpStatusCode.OK, response.status())
-                JSONAssert.assertEquals("""{"price": 100 }""", response.content, JSONCompareMode.LENIENT)
+                JSONAssert.assertEquals("""{"price": 360 }""", response.content, JSONCompareMode.LENIENT)
+            }
+        }
+    }
+
+    @Test
+    fun should_apply_rolex_and_michael_kors_discount() {
+        withTestApplication({ module(testing = true) }) {
+            with(handleRequest(HttpMethod.Post, "/checkout") {
+                addHeader("content-type", "application/json")
+                addHeader("Accept", "application/json")
+                setBody(
+                    """["001","001","001","002","002"]"""
+                )
+            }) {
+                assertEquals(HttpStatusCode.OK, response.status())
+                JSONAssert.assertEquals("""{"price": 320 }""", response.content, JSONCompareMode.LENIENT)
+            }
+        }
+    }
+
+    @Test
+    fun should_apply_rolex_discount() {
+        withTestApplication({ module(testing = true) }) {
+            with(handleRequest(HttpMethod.Post, "/checkout") {
+                addHeader("content-type", "application/json")
+                addHeader("Accept", "application/json")
+                setBody(
+                    """["001","001","001","002"]"""
+                )
+            }) {
+                assertEquals(HttpStatusCode.OK, response.status())
+                JSONAssert.assertEquals("""{"price": 280 }""", response.content, JSONCompareMode.LENIENT)
+            }
+        }
+    }
+
+    @Test
+    fun should_apply_michael_kors_discount() {
+        withTestApplication({ module(testing = true) }) {
+            with(handleRequest(HttpMethod.Post, "/checkout") {
+                addHeader("content-type", "application/json")
+                addHeader("Accept", "application/json")
+                setBody(
+                    """["001","002","002","002","002"]"""
+                )
+            }) {
+                assertEquals(HttpStatusCode.OK, response.status())
+                JSONAssert.assertEquals("""{"price": 340 }""", response.content, JSONCompareMode.LENIENT)
             }
         }
     }
