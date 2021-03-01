@@ -22,6 +22,22 @@ class CheckoutServiceTest {
 
         // then
         assertEquals(price, 80)
+    }
 
+    @Test
+    fun should_return_zero_if_no_items_provided() {
+        // given
+        val pricingService = mock(PricingService::class.java)
+        val discountService = mock(DiscountService::class.java)
+
+        given(pricingService.calculateTotalCost(emptyList())).willReturn(0)
+        given(discountService.calculateDiscount(emptyList())).willReturn(0)
+
+        // when
+        val checkoutService = CheckoutService(discountService, pricingService)
+        val price = checkoutService.checkoutWatches(emptyList())
+
+        // then
+        assertEquals(price, 0)
     }
 }

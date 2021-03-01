@@ -1,7 +1,7 @@
 package com.checkout
 
 class PricingService {
-    private val discountedItems = mapOf(
+    private val itemToPricePairs = mapOf(
         "001" to 100,
         "002" to 80,
         "003" to 50,
@@ -9,6 +9,6 @@ class PricingService {
     )
 
     fun calculateTotalCost(items: List<String>): Int {
-        return items.sumBy { discountedItems[it]!! }
+        return items.sumBy { itemToPricePairs[it]!! }
     }
 }

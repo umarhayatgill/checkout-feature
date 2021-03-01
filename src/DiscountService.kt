@@ -3,6 +3,7 @@ package com.checkout
 class DiscountService {
 
     private data class DiscountedItem(val discountPerItems: Int, val discount: Int)
+    private data class DiscountedItemCount(val item: String, val count: Int)
 
     private val discountedItems = mapOf(
         "001" to DiscountedItem(3, 100),
@@ -14,10 +15,13 @@ class DiscountService {
             .filter { discountedItems.containsKey(it) }
             .groupingBy { it }
             .eachCount()
+            .map { DiscountedItemCount(it.key, it.value) }
 
         var discount = 0
-        totalDiscountableItems.entries.forEach {
-            discount += (it.value / discountedItems[it.key]!!.discountPerItems) * discountedItems[it.key]!!.discount
+        totalDiscountableItems.forEach {
+            val totalNumberOfEligibleDiscountedSets = it.count / discountedItems[it.item]!!.discountPerItems
+            val discountPerSet = discountedItems[it.item]!!.discount
+            discount += totalNumberOfEligibleDiscountedSets * discountPerSet
         }
         return discount
     }
