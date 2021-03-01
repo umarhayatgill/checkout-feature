@@ -1,6 +1,7 @@
 package com.checkout
 
-object DiscountService {
+class DiscountService {
+
     private data class DiscountedItem(val discountPerItems: Int, val discount: Int)
 
     private val discountedItems = mapOf(

@@ -36,4 +36,6 @@ dependencies {
     implementation "io.ktor:ktor-jackson:$ktor_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testImplementation "org.skyscreamer:jsonassert:1.5.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation "org.mockito:mockito-inline:2.13.0"
 }

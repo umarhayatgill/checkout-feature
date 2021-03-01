@@ -1,10 +1,11 @@
 package com.checkout
 
-object CheckoutService {
+class CheckoutService(private val discountService: DiscountService,
+                      private val pricingService: PricingService ) {
 
     fun checkoutWatches(items: List<String>): Int {
-        val totalCost = PricingService.calculateTotalCost(items);
-        val discount = DiscountService.calculateDiscount(items)
-        return totalCost - discount;
+        val totalCost = pricingService.calculateTotalCost(items);
+        val discount = discountService.calculateDiscount(items)
+        return totalCost - discount
     }
 }

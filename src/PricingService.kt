@@ -1,6 +1,6 @@
 package com.checkout
 
-object PricingService {
+class PricingService {
     private val discountedItems = mapOf(
         "001" to 100,
         "002" to 80,
