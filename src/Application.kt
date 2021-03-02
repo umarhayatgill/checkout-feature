@@ -12,7 +12,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 private val checkoutService = CheckoutService(DiscountService(), PricingService())
 
-@Suppress("unused") // Referenced in application.conf
 fun Application.module() {
     install(ContentNegotiation) {
         jackson {

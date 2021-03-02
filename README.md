@@ -1,12 +1,12 @@
-# checkout-feature
+# Checkout Feature
 
-In order to run this prjoect on localhost you need to checkout this repository and hava JVM installed. Use following command to start the server
+In order to run this project on localhost you need to checkout this repository and have JVM installed. Use following command to start the server
 
 ```bash
 ./gradlew run
 ```
 
-It will start a server on **localhost:8080**
+It will start **localhost** server on port **8080**
 
 You can now use curl command from terminal to call checkout endpoint, for example
 
@@ -14,7 +14,7 @@ You can now use curl command from terminal to call checkout endpoint, for exampl
 curl --location --request POST 'http://localhost:8080/checkout' --header 'Content-Type: application/json' --data-raw '["001","001","001","004","003"]'
 ```
 
-It should return 
+It would return back the following response
 
 ```json
 {
