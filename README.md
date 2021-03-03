@@ -1,6 +1,6 @@
 # Checkout Feature
 
-In order to run this project on localhost you need to checkout this repository and have JVM installed. Use following command to start the server
+In order to run this project on localhost you need to checkout this repository and have JVM (it is part of JRE) installed. Use following command to start the server
 
 ```bash
 ./gradlew run
